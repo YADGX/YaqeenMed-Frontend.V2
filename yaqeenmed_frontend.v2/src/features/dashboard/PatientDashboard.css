@@ -1,0 +1,152 @@
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3c4e69;
+    color: white;
+    padding: 0 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+  
+  .hamburger {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .app-name {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+  }
+  
+  .profile-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .profile-pic {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3c4e69;
+  }
+  
+  /* Modern Toggle Button */
+  .dark-mode-toggle {
+    background-color: #3c4e69;
+    border: none;
+    border-radius: 999px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+  
+  .dark-mode-toggle:hover {
+    background-color: #2f3d55;
+  }
+  
+  .dark-mode-toggle.dark {
+    background-color: #333;
+    color: #ffd700;
+  }
+  
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    left: -200px;
+    width: 200px;
+    height: calc(100% - 60px);
+    background-color: #222;
+    color: white;
+    padding: 1rem;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin: 1rem 0;
+    cursor: pointer;
+  }
+  
+  .dashboard-main {
+    margin-top: 60px;
+    padding: 2rem;
+    background-color: #f4f4f4;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .sidebar-open .dashboard-main {
+    margin-left: 200px;
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .dashboard-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .dashboard-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.5rem;
+    width: 300px;
+    transition: transform 0.2s;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .dashboard-footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #3c4e69;
+    color: white;
+    margin-top: auto;
+  }
+  

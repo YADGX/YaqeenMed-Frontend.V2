@@ -1,0 +1,45 @@
+    /* Header.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 1rem 2rem;
+    color: white;
+  }
+  
+  .logo-container {
+    flex: 1;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .nav-link:hover {
+    color: #f1f1f1;
+  }
+  
+  .dark-mode-toggle {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .dark-mode-toggle:hover {
+    background-color: #0056b3;
+  }
+  

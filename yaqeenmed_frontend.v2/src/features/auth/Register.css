@@ -1,0 +1,134 @@
+/* General styling for the page */
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffe0c3, #ffc1a1);
+    background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .register-container h2 {
+    margin-bottom: 20px;
+    color: #5a2a00;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+  
+  input {
+    margin-bottom: 5px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  button {
+    padding: 12px;
+    background-color: #ff8c42;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #e5771b;
+  }
+  
+  .password-field {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .password-field input {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .password-field .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #5a2a00;
+  }
+  
+  .password-field .eye-icon:hover {
+    color: #ff8c42;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  /* Dark and light mode styles */
+  body.dark-mode {
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  body.light-mode {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  /* Dark mode toggle icons */
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-container .icon {
+    font-size: 24px;
+    transition: transform 0.3s ease;
+  }
+  
+  .icon.sun {
+    display: none;
+  }
+  
+  body.dark-mode .icon.sun {
+    display: block;
+  }
+  
+  .icon.moon {
+    display: block;
+  }
+  
+  body.light-mode .icon.moon {
+    display: none;
+  }
+  

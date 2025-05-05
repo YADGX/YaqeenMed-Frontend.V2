@@ -1,0 +1,58 @@
+:root {
+    --bg-light: #f9f9f9;
+    --bg-card-light: #ffffff;
+    --text-light: #333;
+  
+    --bg-dark: #1e1e1e;
+    --bg-card-dark: #2a2a2a;
+    --text-dark: #f0f0f0;
+  }
+  
+  .dashboard-container {
+    padding: 2rem;
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+    transition: color 0.3s ease;
+  }
+  
+  .dashboard-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .dashboard-card {
+    background-color: var(--bg-card-light);
+    color: var(--text-light);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+    padding: 1rem 1.5rem;
+    width: 300px;
+    transition: transform 0.2s, background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Dark Mode Overrides */
+  .dark .dashboard-container {
+    background-color: var(--bg-dark);
+  }
+  
+  .dark .dashboard-title {
+    color: var(--text-dark);
+  }
+  
+  .dark .dashboard-card {
+    background-color: var(--bg-card-dark);
+    color: var(--text-dark);
+  }
+  

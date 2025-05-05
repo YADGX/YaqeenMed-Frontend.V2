@@ -1,23 +1,29 @@
+/* Global Styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  transition: background-color 0.3s, color 0.3s;
 }
 
+/* Logo Styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter 300ms, transform 0.3s;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Spinning Logo */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +39,146 @@
   }
 }
 
+/* Card Styling */
 .card {
   padding: 2em;
 }
 
+/* Documentation Link */
 .read-the-docs {
   color: #888;
+}
+
+/* Light Mode */
+body {
+  background-color: #f4f4f9;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #333;
+  color: white;
+}
+
+/* Dark Mode Specific Styling */
+body.dark-mode .logo {
+  filter: drop-shadow(0 0 2em #61dafb);
+}
+
+body.dark-mode .card {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode .read-the-docs {
+  color: #bbb;
+}
+
+/* Header and Footer */
+.header, .footer {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.header .logo-container {
+  flex: 1;
+}
+
+.header .nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.header .nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header .nav-link:hover {
+  color: #f1f1f1;
+}
+
+/* Dark Mode Icon Styling */
+.dark-mode-icon {
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.dark-mode-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Additional Styling for Light/Dark Modes */
+body.dark-mode .home-container {
+  background-color: #222;
+}
+
+body.dark-mode .home-button {
+  background-color: #007bff;
+  color: white;
+}
+
+body.dark-mode .home-button:hover {
+  background-color: #0056b3;
+}
+
+body.dark-mode .home-input {
+  background-color: #555;
+  color: white;
+  border: 1px solid #666;
+}
+
+body.dark-mode .home-input:focus {
+  border-color: #007bff;
+}
+
+/* Button Styling */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Input Styling */
+input, textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+  margin: 10px 0;
+}
+
+input:focus, textarea:focus {
+  border-color: #007bff;
 }
