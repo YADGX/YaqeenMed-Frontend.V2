@@ -1,32 +1,41 @@
-// src/pages/PatientDashboard.jsx
-import React, { useState, useEffect } from 'react';
-import axios from '../../utilities/axios';
-import './PatientDashboard.css';
-import { FaMoon, FaSun } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import { getPostedRequests } from "../../utilities/request-api"; // Import the getPostedRequests function
+import sendRequest from "../../utilities/sendRequest"; // Import the sendRequest function
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import "./PatientDashboard.css";
+import { FaMoon, FaSun } from "react-icons/fa";  // Import the required icons
 
-function PatientDashboard() {
-  const [patientData, setPatientData] = useState([]);
+
+
+function PatientDashboard({user}) {
+  const [postedRequests, setPostedRequests] = useState([]);  // Update state to hold posted requests
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showPostRequestForm, setShowPostRequestForm] = useState(false);
+  const [title, setTitle] = useState("");
+  const [detailedComment, setDetailedComment] = useState("");
+  const [summaryComment, setSummaryComment] = useState("");
+  const [document, setDocument] = useState("");
+
+  const navigate = useNavigate(); // Initialize navigate for redirection
+
+  const fetchPostedRequests = async () => {
+    try {
+      const data = await getPostedRequests(); // Call the service function to get posted requests
+      setPostedRequests(data);  // Update the state with the fetched requests
+    } catch (error) {
+      console.error("Error fetching posted requests", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('patients/');
-        setPatientData(response.data);
-      } catch (error) {
-        console.error('Error fetching patient data', error);
-      }
-    };
+    fetchPostedRequests();  // Fetch posted requests when the component mounts
 
-    fetchData();
-
-    const savedMode = localStorage.getItem('darkMode') === 'true';
+    const savedMode = localStorage.getItem("darkMode") === "true";
     setIsDarkMode(savedMode);
-    document.body.classList.toggle('dark-mode', savedMode);
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   const toggleDarkMode = () => {
     const newMode = !isDarkMode;
@@ -35,22 +44,75 @@ function PatientDashboard() {
     document.body.classList.toggle('dark-mode', newMode);
   };
 
+  const handlePostRequestClick = () => {
+    setShowPostRequestForm(!showPostRequestForm);  // Toggle form visibility on button click
+  };
+
+  const handleCloseForm = () => {
+    setShowPostRequestForm(false);  // Close form and reset values
+    setTitle("");
+    setDetailedComment("");
+    setSummaryComment("");
+    setDocument(null);
+  };
+
+  const handleSubmitRequest = async (e) => {
+    try {
+      e.preventDefault();
+      console.log(user)
+      const formData = {
+        "title": title,
+        "detailed_comment": detailedComment,
+        "summary_comment": summaryComment,
+        "document": document,  
+        "issue": 1,
+        "user": user?.id, 
+      }
+
+      console.log("Form Data:", formData);  // Log the form data for debugging
+        const response = await sendRequest("/patient-requests/", "POST", formData);
+        console.log("Response:", response);  // Log the response for debugging
+        if (response) {
+            alert("Request posted successfully!");
+            fetchPostedRequests();  // Re-fetch the posted requests after a new one is posted
+            handleCloseForm();
+        } else {
+            alert("Error posting the request.");
+        }
+    } catch (error) {
+        console.error("There was an error posting the request!", error);
+        alert("Error posting the request.");
+    }
+};
+
+  // Logout Function
+  const handleLogout = () => {
+    localStorage.removeItem("token");  // Remove the token from localStorage
+    navigate("/");  // Redirect to the login page
+  };
+
+  if (!postedRequests) {
+    return <div>Loading...</div>; // Show loading state while fetching data
+  }
+
   return (
-    <div className={`dashboard-layout ${sidebarOpen ? 'sidebar-open' : ''}`}>
+    <div className={`dashboard-layout ${sidebarOpen ? "sidebar-open" : ""}`}>
       <header className="dashboard-header">
-        <button className="hamburger" onClick={toggleSidebar}>☰</button>
+        <button className="hamburger" onClick={toggleSidebar}>
+          ☰
+        </button>
         <h1 className="app-name">YaqeenMed</h1>
         <div className="header-right">
           <button
             className="dark-mode-toggle"
             onClick={toggleDarkMode}
-            style={{ backgroundColor: '#3c4e69' }}
+            style={{ backgroundColor: "#3c4e69" }}
           >
             {isDarkMode ? <FaSun /> : <FaMoon />}
           </button>
           <div className="profile-button">
             <img
-              src="https://i.pravatar.cc/150?img=3" // Replace with dynamic profile image
+              src="https://i.pravatar.cc/150?img=3"
               alt="Profile"
               className="profile-pic"
             />
@@ -58,20 +120,62 @@ function PatientDashboard() {
         </div>
       </header>
 
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul>
           <li>Dashboard</li>
           <li>Documents</li>
         </ul>
+        <button className="logout-btn" onClick={handleLogout}>Logout</button> {/* Logout Button */}
       </aside>
 
       <main className="dashboard-main">
-        <button className="post-request-btn">Post Request +</button>
-        <h2 className="dashboard-title">Your Info</h2>
+        {/* Post Request Button */}
+        <button className="post-request-btn" onClick={handlePostRequestClick}>
+          Post Request +
+        </button>
+
+        {/* Conditional Form Rendering */}
+        {showPostRequestForm && (
+          <div className="post-request-form">
+            <h2>Post a New Request</h2>
+            <form onSubmit={handleSubmitRequest}>
+              <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+              <textarea
+                placeholder="Detailed Comment"
+                value={detailedComment}
+                onChange={(e) => setDetailedComment(e.target.value)}
+                required
+              />
+              <textarea
+                placeholder="Summary Comment"
+                value={summaryComment}
+                onChange={(e) => setSummaryComment(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                value={document}
+                onChange={(e) => setDocument(e.target.value)}
+                required
+              />
+              <button type="submit">Submit Request</button>
+              <button type="button" onClick={handleCloseForm}>Cancel</button>
+            </form>
+          </div>
+        )}
+
+        {/* Displaying Posted Requests */}
         <ul className="dashboard-list">
-          {patientData.map((patient) => (
-            <li className="dashboard-card" key={patient.id}>
-              <strong>{patient.user.username}</strong> - {patient.age} years old
+          {postedRequests.map((request) => (
+            <li className="dashboard-card" key={request.id}>
+              <strong>{request.title || "No title"}</strong> - 
+              {request.detailed_comment || "No details"}
             </li>
           ))}
         </ul>

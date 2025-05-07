@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../../utilities/axios';
 import { useNavigate } from 'react-router-dom';
-import './Register.css';
-import { FaSun, FaMoon } from 'react-icons/fa';  // Import sun and moon icons
+import { FaSun, FaMoon } from 'react-icons/fa'; 
+import { registerUser, checkEmailUnique } from '../../utilities/auth-api'; // Import API functions
 import Navbar from '../../components/Navbar/Navbar'; // Import Navbar component
+import './Register.css';
+import * as userAPI from '../../utilities/user-api'; // Import user API functions
 
 function Register() {
   const [username, setUsername] = useState('');
@@ -20,21 +21,21 @@ function Register() {
   const navigate = useNavigate(); // Use navigation hook
 
   // Username and password validation
-  const validateUsername = (username) => {
-    const usernameRegex = /^[A-Za-z]{3,}$/; // Only letters, minimum 3 characters
-    if (!usernameRegex.test(username)) {
-      return 'Username must be at least 3 characters long and only contain letters.';
-    }
-    return '';
-  };
+  // const validateUsername = (username) => {
+  //   const usernameRegex = /^[A-Za-z]{3,}$/; // Only letters, minimum 3 characters
+  //   if (!usernameRegex.test(username)) {
+  //     return 'Username must be at least 3 characters long and only contain letters.';
+  //   }
+  //   return '';
+  // };
 
-  const validatePassword = (password) => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-    if (!passwordRegex.test(password)) {
-      return 'Password must be at least 8 characters long, and include at least one uppercase letter, one lowercase letter, one number, and one symbol.';
-    }
-    return '';
-  };
+  // const validatePassword = (password) => {
+  //   const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+  //   if (!passwordRegex.test(password)) {
+  //     return 'Password must be at least 8 characters long, and include at least one uppercase letter, one lowercase letter, one number, and one symbol.';
+  //   }
+  //   return '';
+  // };
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -45,10 +46,10 @@ function Register() {
   };
 
   // Check if the email is unique by calling the API
-  const checkEmailUnique = async (email) => {
+  const handleEmailCheck = async (email) => {
     try {
-      const response = await axios.get(`/api/check-email/${email}`);
-      if (response.data.exists) {
+      const error = await checkEmailUnique(email);
+      if (error) {
         return 'Email is already registered.';
       }
       return '';
@@ -61,34 +62,28 @@ function Register() {
     e.preventDefault();
 
     // Validate all fields
-    const usernameError = validateUsername(username);
-    const passwordError = validatePassword(password);
-    const emailError = validateEmail(email);
-    const emailUniqueError = await checkEmailUnique(email);
+    // const usernameError = validateUsername(username);
+    // const passwordError = validatePassword(password);
+    // const emailError = validateEmail(email);
+    // const emailUniqueError = await handleEmailCheck(email);
 
     // If any validation fails, set errors and return
-    if (usernameError || passwordError || emailError || emailUniqueError) {
-      setErrors({
-        username: usernameError,
-        email: emailError || emailUniqueError,
-        password: passwordError,
-      });
-      return;
-    }
+    // if (usernameError || passwordError || emailError) {
+    //   setErrors({
+    //     username: usernameError,
+    //     email: emailError,
+    //     password: passwordError,
+    //   });
+    //   return;
+    // }
 
     try {
-      // Make a POST request to register the user
-      await axios.post('http://localhost:8000/api/register/', { username, email, password, role });
-
+      // Make a POST request to register the user using API utility
+      const user = await userAPI.signup({ username, email, password, role });
       // Successful registration
-      alert('Registration successful!');
 
       // Redirect to role-specific dashboard
-      if (role === 'doctor') {
-        navigate('/doctor-dashboard');
-      } else {
-        navigate('/patient-dashboard');
-      }
+      navigate('/')
     } catch (error) {
       console.error('Registration error:', error);
       alert('Registration failed. Please try again.');
@@ -174,12 +169,12 @@ function Register() {
 
         {/* Role Selection */}
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
-          <option value="patient">Patient</option>
+          <option value="patient" default>Patient</option>
           <option value="doctor">Doctor</option>
         </select>
         
         <button type="submit">Register</button>
-      </form>
+      </form> 
     </div>
   );
 }

@@ -14,13 +14,13 @@ function Navbar() {
     <nav className="navbar">
       <Link to="/" className="logo">YaqeenMed</Link>
       <ul className="nav-links">
-        <li><Link to="/register">Register</Link></li>
-        <li><Link to="/home">Login</Link></li>
+        {/* <li><Link to="/register">Register</Link></li> */}
+        <li><Link to="/">Login</Link></li>
         {/* Add other links here if needed */}
       </ul>
-      <div className="dark-mode-toggle" onClick={toggleDarkMode}>
+      {/* <div className="dark-mode-toggle" onClick={toggleDarkMode}>
         <i className={`fa ${darkMode ? 'fa-sun' : 'fa-moon'}`} />
-      </div>
+      </div> */}
     </nav>
   );
 }

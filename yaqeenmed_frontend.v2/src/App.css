@@ -51,7 +51,7 @@
 
 /* Light Mode */
 body {
-  background-color: #f4f4f9;
+  background-color: #ececec;
   color: black;
   transition: background-color 0.3s, color 0.3s;
 }

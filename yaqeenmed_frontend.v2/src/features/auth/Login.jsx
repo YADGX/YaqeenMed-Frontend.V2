@@ -1,35 +1,37 @@
-import React, { useState } from 'react';
-import axios from '../../utilities/axios';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
+import * as userAPI from '../../utilities/user-api'; // Import user API functions
 
-function Login() {
+function Login({setUser}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Make a POST request to authenticate the user
-      const response = await axios.post('http://localhost:8000/api/token/', { username, password });
+      const response = await userAPI.login({ username, password });
+ 
+      setUser(response.user)
 
-      // Store the tokens in local storage
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
+      if (response.access && response.refresh && response.role) {
+        localStorage.setItem('access_token', response.access);
+        localStorage.setItem('refresh_token', response.refresh);
 
-      alert('Login successful!');
+        alert('Login successful!');
 
-      // Redirect based on user role (if available)
-      const userRole = response.data.role; // Example: Get the user role from the response
+        const userRole = response.role;  
 
-      if (userRole === 'patient') {
-        navigate('/patient-dashboard');  // Navigate to the patient dashboard
-      } else if (userRole === 'doctor') {
-        navigate('/doctor-dashboard');  // Navigate to the doctor dashboard
+        if (userRole === 'patient') {
+          navigate('/patient-dashboard'); 
+        } else if (userRole === 'doctor') {
+          navigate('/doctor-dashboard'); // Navigate to doctor dashboard
+        } else {
+          navigate('/');  // Redirect to the home page or another appropriate page
+        }
       } else {
-        // Default case if role is not set or unexpected
-        navigate('/');
+        alert('Invalid response from the server.');
       }
     } catch (error) {
       console.error('Error logging in', error);
@@ -59,7 +61,7 @@ function Login() {
           <button type="submit" className="login-button">Login</button>
         </form>
         <p className="register-link">Don't have an account? <Link to="/register">Register here</Link></p>
-        <p className="forgot-password-link"><Link to="/forgot-password">Forgot Password?</Link></p> {/* Forgot password link */}
+        <p className="forgot-password-link"><Link to="/forgot-password">Forgot Password?</Link></p>
       </div>
     </div>
   );

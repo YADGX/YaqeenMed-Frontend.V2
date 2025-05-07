@@ -56,3 +56,67 @@
     color: var(--text-dark);
   }
   
+  /* DoctorDashboard.css */
+
+/* Logout Button Styling */
+.logout-btn {
+  background-color: #ff4d4d; /* Red background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Push the button to the bottom */
+}
+
+.logout-btn:hover {
+  background-color: #e60000; /* Darker red on hover */
+}
+
+
+/* Styling the table */
+.requests-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.requests-table table {
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.requests-table th, .requests-table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.requests-table th {
+  background-color: #f4f4f4;
+}
+
+/* Styling the Accept/Decline buttons */
+.accept-btn, .decline-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.accept-btn {
+  color: green;
+}
+
+.decline-btn {
+  color: red;
+}
+
+.accept-btn:hover, .decline-btn:hover {
+  opacity: 0.8;
+}
+

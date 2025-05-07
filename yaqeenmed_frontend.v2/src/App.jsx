@@ -7,10 +7,12 @@ import DoctorDashboard from './features/dashboard/DoctorDashboard';
 import Register from './features/auth/Register';
 import './App.css';
 import ForgotPassword from './features/auth/ForgotPassword';
+import { getUser } from './utilities/user-api';
 
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem('darkMode');
@@ -40,12 +42,12 @@ function App() {
       </button> */}
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/patient-dashboard" element={<PatientDashboard />} />
-        <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/" element={<Home user={user} setUser={setUser}/>} />
+        <Route path="/login" element={<Login setUser={setUser}/>} />
+        <Route path="/patient-dashboard" element={<PatientDashboard user={user}/>} />
+        <Route path="/doctor-dashboard" element={<DoctorDashboard user={user}/>} />
+        <Route path="/register" element={<Register user={user}/>} />
+        <Route path="/forgot-password" element={<ForgotPassword user={user}/>} />
       </Routes>
     </div>
   );

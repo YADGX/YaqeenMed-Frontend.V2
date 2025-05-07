@@ -10,8 +10,13 @@
   .navbar .logo {
     font-size: 1.5rem;
     font-weight: bold;
-  }
-  
+    color: black;
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    justify-content: center; /* Horizontally centers the text */
+    height: 100%; /* Ensures the full height of the navbar is considered */
+}
+
   .navbar .nav-links {
     display: flex;
     gap: 20px;

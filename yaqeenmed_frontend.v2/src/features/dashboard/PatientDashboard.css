@@ -1,7 +1,9 @@
 .dashboard-layout {
+    /* background-color: #f4f4f4; */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* padding-left: 20px;  */
   }
   
   .dashboard-header {
@@ -150,3 +152,86 @@
     margin-top: auto;
   }
   
+
+  /* PatientDashboard.css */
+.post-request-form {
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.post-request-form input,
+.post-request-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.post-request-form button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.post-request-form button:hover {
+  background-color: #45a049;
+}
+
+.dashboard-footer {
+  padding: 10px;
+  text-align: center;
+  background: #3c4e69;
+}
+
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: -200px;
+  width: 200px;
+  height: calc(100% - 60px); /* Ensure it takes full height */
+  background-color: #222;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column; /* Use column direction */
+  justify-content: space-between; /* Push the button to the bottom */
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px; /* Add spacing between list and logout button */
+}
+
+.sidebar li {
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+/* Logout Button Styling */
+.logout-btn {
+  background-color: #ff4d4d; /* Red background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-top: auto; /* Ensures it stays at the bottom */
+}
+
+.logout-btn:hover {
+  background-color: #e60000; /* Darker red on hover */
+}
+

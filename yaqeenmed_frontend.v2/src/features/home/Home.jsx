@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from '../../utilities/axios';
 import './Home.css';
+import { loginUser } from '../../utilities/auth-api';
 
-function Home() {
+import * as userAPI from '../../utilities/user-api'; // Import user API functions
+
+
+function Home({user, setUser}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -12,11 +15,20 @@ function Home() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/token/', { username, password });
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
+      const response = await userAPI.login({ username, password });
+      console.log(response.user)
+      setUser(response.user)
+     
       alert('Login successful!');
-      navigate('/patient-dashboard');  // Redirect to patient dashboard after successful login
+
+      const userRole = response.user.role;
+      if (userRole === 'patient') {
+        navigate('/patient-dashboard');
+      } else if (userRole === 'doctor') {
+        navigate('/doctor-dashboard');
+      } else {
+        navigate('/patient-dashboard'); 
+      }
     } catch (error) {
       console.error('Error logging in', error);
       alert('Login failed. Check your credentials.');
@@ -28,7 +40,6 @@ function Home() {
       <h1>Welcome to YaqeenMed</h1>
       <p>Your health, your choice.</p>
 
-      {/* Login Form */}
       <form onSubmit={handleLogin} className="login-form">
         <input
           type="text"
@@ -47,12 +58,9 @@ function Home() {
         <button type="submit" className="home-button">Login</button>
       </form>
 
-      {/* Forgot Password link */}
       <div className="forgot-password">
         <Link to="/forgot-password" className="home-link">Forgot Password?</Link>
       </div>
-
-      {/* Register link */}
       <div className="home-links">
         <Link to="/register" className="home-link">Register</Link>
       </div>
