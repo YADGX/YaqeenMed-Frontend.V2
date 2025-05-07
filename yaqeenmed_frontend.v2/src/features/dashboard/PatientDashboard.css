@@ -113,6 +113,7 @@
     padding: 2rem;
     background-color: #f4f4f4;
     transition: margin-left 0.3s ease-in-out;
+    min-width: 1000px;
   }
   
   .sidebar-open .dashboard-main {
@@ -167,19 +168,21 @@
   width: 100%;
   padding: 10px;
   margin: 10px 0;
+  background-color: #e1e1e1;
 }
 
 .post-request-form button {
-  background-color: #4CAF50;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
   width: 100%;
+  
 }
 
 .post-request-form button:hover {
-  background-color: #45a049;
+  background-color: #3c4e69;
 }
 
 .dashboard-footer {

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; 
+import sendRequest from '../../utilities/sendRequest';  // Import the sendRequest function
+import { Check, Close } from '@mui/icons-material';  // Import Material-UI icons
 import './DoctorDashboard.css';
 
-function DoctorDashboard({user}) {
+function DoctorDashboard({ user }) {
   const [patientRequests, setPatientRequests] = useState([]); // To store patient requests
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -11,10 +13,11 @@ function DoctorDashboard({user}) {
   const navigate = useNavigate(); // Initialize navigate for redirection
 
   useEffect(() => {
+    // Fetch pending patient requests when the component mounts
     const fetchPatientRequests = async () => {
       try {
-        const data = await getAllPatientRequests(); // Fetch the patient requests from the backend
-        setPatientRequests(data);
+        const data = await sendRequest('/patient-requests/', 'GET'); // Fetch patient requests from the backend
+        setPatientRequests(data);  // Update the state with fetched data
       } catch (error) {
         console.error('Error fetching patient requests', error);
       }
@@ -45,15 +48,24 @@ function DoctorDashboard({user}) {
   };
 
   // Handle Accept action
-  const handleAccept = (requestId) => {
-    console.log('Accept request', requestId);
-    // You can send an API request here to update the request status to 'Accepted'
+  const handleAccept = async (requestId) => {
+    try {
+      const response = await sendRequest(`/patient-requests/${requestId}/action/`, 'POST', { action: 'accept' });
+      console.log('Request accepted', response);
+      fetchPatientRequests();  // Re-fetch requests after action
+    } catch (error) {
+      console.error('Error accepting request', error);
+    }
   };
-
-  // Handle Decline action
-  const handleDecline = (requestId) => {
-    console.log('Decline request', requestId);
-    // You can send an API request here to update the request status to 'Declined'
+  
+  const handleDecline = async (requestId) => {
+    try {
+      const response = await sendRequest(`/api/patient-requests/${requestId}/action/`, 'POST', { action: 'decline' });
+      console.log('Request declined', response);
+      fetchPatientRequests();  // Re-fetch requests after action
+    } catch (error) {
+      console.error('Error declining request', error);
+    }
   };
 
   return (
@@ -102,10 +114,24 @@ function DoctorDashboard({user}) {
               {patientRequests.map((request) => (
                 <tr key={request.id}>
                   <td>{request.title}</td>
-                  <td>{request.summary}</td>
+                  <td>{request.summary_comment}</td>
                   <td>
-                    <button onClick={() => handleAccept(request.id)} className="accept-btn">✔️</button>
-                    <button onClick={() => handleDecline(request.id)} className="decline-btn">❌</button>
+                    {/* Accept Button with Material-UI Check Icon */}
+                    <button 
+                      onClick={() => handleAccept(request.id)} 
+                      className="accept-btn" 
+                      style={{ color: 'green', fontSize: '24px', border: 'none', background: 'none' }}
+                    >
+                      <Check />
+                    </button>
+                    {/* Decline Button with Material-UI Close Icon */}
+                    <button 
+                      onClick={() => handleDecline(request.id)} 
+                      className="decline-btn" 
+                      style={{ color: 'red', fontSize: '24px', border: 'none', background: 'none' }}
+                    >
+                      <Close />
+                    </button>
                   </td>
                 </tr>
               ))}

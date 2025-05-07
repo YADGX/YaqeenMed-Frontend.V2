@@ -120,3 +120,23 @@
   opacity: 0.8;
 }
 
+
+.accept-btn {
+  background-color: green;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.decline-btn {
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.accept-btn:hover, .decline-btn:hover {
+  opacity: 0.8;
+}
+
+

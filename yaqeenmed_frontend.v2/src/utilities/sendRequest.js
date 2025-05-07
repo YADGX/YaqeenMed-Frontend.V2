@@ -26,3 +26,5 @@ export default async function sendRequest(url, method = 'GET', payload) {
         throw err; 
     }
 }
+
+
