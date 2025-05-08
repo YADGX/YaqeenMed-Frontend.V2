@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Home.css';
-import { loginUser } from '../../utilities/auth-api';
-
 import * as userAPI from '../../utilities/user-api'; // Import user API functions
+import Logo from '../../assets/Logo3.png'; // Assuming the logo is stored in the "assets" folder
 
-
-function Home({user, setUser}) {
+function Home({ setUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -16,18 +14,18 @@ function Home({user, setUser}) {
 
     try {
       const response = await userAPI.login({ username, password });
-      console.log(response.user)
-      setUser(response.user)
-     
+      console.log(response.user);
+      setUser(response.user); // Save user data in state
+
       alert('Login successful!');
 
-      const userRole = response.user.role;
+      const userRole = response.user.role; // Check the role of the user
       if (userRole === 'patient') {
-        navigate('/patient-dashboard');
+        navigate('/patient-dashboard'); // Navigate to patient dashboard
       } else if (userRole === 'doctor') {
-        navigate('/doctor-dashboard');
+        navigate('/doctor-dashboard'); // Navigate to doctor dashboard
       } else {
-        navigate('/patient-dashboard'); 
+        navigate('/patient-dashboard'); // Default to patient dashboard if role is unknown
       }
     } catch (error) {
       console.error('Error logging in', error);
@@ -37,7 +35,11 @@ function Home({user, setUser}) {
 
   return (
     <div className="home-container">
-      <h1>Welcome to YaqeenMed</h1>
+      <div className="logo-container">
+        <h1>Welcome to YaqeenMed</h1>
+        <img src={Logo} alt="YaqeenMed Logo" className="home-logo" />
+      </div>
+      
       <p>Your health, your choice.</p>
 
       <form onSubmit={handleLogin} className="login-form">

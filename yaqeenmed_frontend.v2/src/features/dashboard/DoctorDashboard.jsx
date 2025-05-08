@@ -51,6 +51,7 @@ function DoctorDashboard({ user }) {
   const handleAccept = async (requestId) => {
     try {
       const response = await sendRequest(`/patient-requests/${requestId}/action/`, 'POST', { action: 'accept' });
+      console.log(`URL being sent: /patient-requests/${requestId}/action/`);
       console.log('Request accepted', response);
       fetchPatientRequests();  // Re-fetch requests after action
     } catch (error) {
@@ -60,7 +61,8 @@ function DoctorDashboard({ user }) {
   
   const handleDecline = async (requestId) => {
     try {
-      const response = await sendRequest(`/api/patient-requests/${requestId}/action/`, 'POST', { action: 'decline' });
+      const response = await sendRequest(`/patient-requests/${requestId}/action/`, 'POST', { action: 'decline' });
+      console.log(`URL being sent: /patient-requests/${requestId}/action/`);
       console.log('Request declined', response);
       fetchPatientRequests();  // Re-fetch requests after action
     } catch (error) {
